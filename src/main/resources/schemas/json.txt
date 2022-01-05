@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "headers": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "user-agent": {
+          "type": "string"
+        },
+        "accept": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "host",
+        "user-agent",
+        "accept"
+      ]
+    },
+    "clientCertificate": {
+      "type": "null"
+    },
+    "method": {
+      "type": "string"
+    },
+    "scheme": {
+      "type": "string"
+    },
+    "queryParams": {
+      "type": "object",
+      "properties": {
+        "poke": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "poke"
+      ]
+    },
+    "requestUri": {
+      "type": "string"
+    },
+    "queryString": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "maskedRequestPath": {
+      "type": "null"
+    },
+    "listenerPath": {
+      "type": "string"
+    },
+    "relativePath": {
+      "type": "string"
+    },
+    "localAddress": {
+      "type": "string"
+    },
+    "uriParams": {
+      "type": "object"
+    },
+    "rawRequestUri": {
+      "type": "string"
+    },
+    "rawRequestPath": {
+      "type": "string"
+    },
+    "remoteAddress": {
+      "type": "string"
+    },
+    "requestPath": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "headers",
+    "clientCertificate",
+    "method",
+    "scheme",
+    "queryParams",
+    "requestUri",
+    "queryString",
+    "version",
+    "maskedRequestPath",
+    "listenerPath",
+    "relativePath",
+    "localAddress",
+    "uriParams",
+    "rawRequestUri",
+    "rawRequestPath",
+    "remoteAddress",
+    "requestPath"
+  ]
+}

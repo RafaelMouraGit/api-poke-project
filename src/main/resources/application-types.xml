@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="query" format="json">
+      <types:shape format="json-schema" location="schemas/json.txt"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#691c8f6f-17c4-4f63-b233-1782ce7a3930">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:attributes type="query[]"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
