@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="poke-api-project-suite.xml" />
+	<munit:test name="poke-api-projectFlow-test" doc:id="4a85613d-47a7-431d-a4a3-31653169c710" ignore="true">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="41bc0296-6a5b-462e-ba71-15ed02a364ab" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="b137324c-cdf1-476a-b8e0-614ea751cd33" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://pokeapiprojectFlowtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://pokeapiprojectFlowtest\mock_attributes.dwl')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit-tools:spy doc:name="Spy Transform Message" doc:id="51076075-54af-4575-bf61-b57f8c4bc836" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="56ac3b3a-90b3-4eb8-bb2b-4a7e9c3212f2" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="5a776f41-43d6-4ce0-a4b2-c40adea725c0" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pokeapiprojectFlowtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+					<munit-tools:assert doc:name="Assert attributes" doc:id="ef0c7ab6-9552-426b-8f97-37187fbed78f" message="The attributes do not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pokeapiprojectFlowtest::spy_assert_attributes
+---
+spy_assert_attributes::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="30b5d3e1-ee2e-4fa6-b141-757251a4554a" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pokeapiprojectFlowtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+					<munit-tools:assert doc:name="Assert attributes" doc:id="1e46aaae-e6d8-4a10-a9d2-d930aa4899f0" message="The attributes do not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import pokeapiprojectFlowtest::spy_assert_attributes1
+---
+spy_assert_attributes1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="3f5680a0-7975-4eba-95f0-fe60f281ef13" >
+				<munit:payload value="#[readUrl('classpath://pokeapiprojectFlowtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://pokeapiprojectFlowtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to poke-api-projectFlow" doc:id="68f27838-0e29-4ce8-8bf3-6ba315250ffe" name="poke-api-projectFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="7756be47-042c-4d0b-9adb-eea216d1e3ca" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import pokeapiprojectFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="14638863-27c3-4081-a7d3-2259c68c33c7" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="56ac3b3a-90b3-4eb8-bb2b-4a7e9c3212f2" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="poke-api-projectFlow-errorHTTP-test" doc:id="638e9e07-72f0-46c6-8897-15df7e2066e1" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Request" doc:id="7422d5e2-8398-46c0-890f-447b64b5f922" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="b137324c-cdf1-476a-b8e0-614ea751cd33" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="HTTP:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="c95df0f9-b6c4-4996-afb5-b0ab287f06c7" >
+				<munit:payload value="#[readUrl('classpath://pokeapiprojectFlowerrorHTTPtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://pokeapiprojectFlowerrorHTTPtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to poke-api-projectFlow" doc:id="4a8ae1f5-017f-487b-a63d-de1b94164bfa" name="poke-api-projectFlow"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="fa11d668-2294-4290-bcf4-929173514345" actual="#[payload]" expected='#["Error BAD REQUEST"]'/>
+			<munit-tools:verify-call doc:name="Verify call" doc:id="646102f3-d6ff-4930-b189-77b820da03a9" processor="set-payload" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a2277f7c-1d22-41c2-81ad-b9d4187d178a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

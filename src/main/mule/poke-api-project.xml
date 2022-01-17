@@ -22,5 +22,13 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-	</flow>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="99d97f33-a10a-471f-97eb-364f0f146f86" type="HTTP:BAD_REQUEST">
+				<set-payload value='#["Error BAD REQUEST"]' doc:name="Set Payload" doc:id="a2277f7c-1d22-41c2-81ad-b9d4187d178a" />
+				<logger level="INFO" doc:name="Logger" doc:id="406b236e-7be7-4cf1-a616-a6a528acbb0d" />
+			</on-error-continue>
+		</error-handler>
+	
+</flow>
+
 </mule>

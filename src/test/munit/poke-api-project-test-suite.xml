@@ -20,7 +20,6 @@
 					<munit-tools:with-attribute whereValue="b137324c-cdf1-476a-b8e0-614ea751cd33" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
-					<munit-tools:payload value="#[payload]" />
 					<munit-tools:attributes value="#[attributes]" />
 				</munit-tools:then-return>
 			</munit-tools:mock-when>
